@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        City Name: <br>
+        <input type="text" name="city">
+        <button onclick="load(name)">Submit</button>
+    </form>
+    
+    <script>
+        function load(name) {
+            var x = "http://localhost:8000/zips/city/" + name;
+            // fetch("http://localhost:8000/zips/city/")
+            fetch(x)
+            .then(function(resp) {
+                return resp.json()
+            })
+            .then(function(data) {
+                console.log(data)
+            })
+            .catch(function(err) {
+                console.error(err)
+            })
+        }
+        fetch("http://localhost:8000/zips/city/")
+            .then(function(resp) {
+                return resp.json()
+            })
+            .then(function(data) {
+                console.log(data)
+            })
+            .catch(function(err) {
+                console.error(err)
+            })
+    </script>
+
+</body>
+</html>
