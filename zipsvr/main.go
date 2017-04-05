@@ -28,17 +28,17 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
 	// must add headers before writing body
 	w.Header().Add("Content-Type", "text/plain")
-	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	w.Write([]byte("hello " + name))
 }
 
 func (zi zipIndex) zipsForCityHandler(w http.ResponseWriter, r *http.Request) {
-	// want to request /zips/city/seattle
+	// /zips/city/seattle
 	_, city := path.Split(r.URL.Path)
 	lcity := strings.ToLower(city)
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	encoder := json.NewEncoder(w)
 	if err := encoder.Encode(zi[lcity]); err != nil {
@@ -52,7 +52,7 @@ func main() {
 		log.Fatal("please set ADDR enviro var")
 	}
 
-	f, err := os.Open("../data/zips.json")
+	f, err := os.Open("./zips.json")
 	if err != nil {
 		log.Fatal("error opening zips file: " + err.Error())
 	}
@@ -75,7 +75,7 @@ func main() {
 
 	fmt.Printf("there are %d zips in seattle\n", len(zi["seattle"]))
 
-	http.HandleFunc("/hello", helloHandler)
+	// http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/zips/city/", zi.zipsForCityHandler)
 
 	fmt.Printf("server is listening at %s...\n", addr)

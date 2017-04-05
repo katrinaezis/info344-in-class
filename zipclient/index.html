@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
-    <form>
-        City Name: <br>
-        <input type="text" name="city">
-        <button onclick="load(name)">Submit</button>
-    </form>
+    <div>
+        <input type="text" id="city">
+        <button onclick="load()">Submit</button>
+    </div>
     
     <script>
-        function load(name) {
-            var x = "http://localhost:8000/zips/city/" + name;
+        function load() {
+            var x = "http://localhost:8000/zips/city/" + $("#city").val();;
+            console.log(x);
             // fetch("http://localhost:8000/zips/city/")
             fetch(x)
             .then(function(resp) {
@@ -28,7 +29,7 @@
                 console.error(err)
             })
         }
-        // fetch("http://localhost:8000/zips/city/")
+        // fetch("http://localhost:8000/zips/city/vista")
         //     .then(function(resp) {
         //         return resp.json()
         //     })
